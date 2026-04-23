@@ -1,0 +1,21 @@
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment
+anaconda_projects/
+.env
+venv/
+env/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data (if large)
+# data/*.csv

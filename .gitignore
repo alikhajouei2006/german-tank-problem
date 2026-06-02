@@ -16,6 +16,3 @@ env/
 # OS
 .DS_Store
 Thumbs.db
-
-# Data (if large)
-# data/*.csv

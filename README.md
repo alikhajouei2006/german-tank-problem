@@ -1,47 +1,82 @@
-# German Tank Problem: Statistical Comparison of Estimators
+# German Tank Problem: Monte Carlo Simulation and Estimator Comparison
 
 ## Overview
-This project simulates the WWII German Tank Problem to compare three estimators (MLE, MVUE, MOM) for estimating the total number of tanks N from serial numbers.
+This project simulates the WWII German Tank Problem and compares three estimators (MLE, MVUE, and MOM) for estimating the total number of tanks N from observed serial numbers.
+Version 1.0 generates bar plots comparing estimator performance across different sample sizes.
+
+## Problem Background
+During World War II, the Allies were curious to estimate the total number of tanks produced by Germany. 
+Conventional intelligence methods were highly unreliable. 
+Statisticians, however, devised an inventive approach: 
+they estimated the unknown population size $N$ using only the serial numbers of captured tanks. 
+This problem, known as the $\textbf{German Tank Problem}$, demonstrates how statistical estimation can outperform traditional intelligence gathering.
 
 ## Methods
 - Monte Carlo simulation (1000 iterations)
-- Comparison via Mean Absolute Error (MAE)
-- Statistical tests: Shapiro-Wilk, Paired t-test, Wilcoxon signed-rank, Bootstrap CI
 
-## Key Findings
-- MVUE consistently outperforms MLE and MOM in terms of MAE.
-- Wilcoxon test confirms MVUE is significantly better (p < 0.001).
-- Bootstrap CI for median difference contains zero, indicating median difference is not significant.
+Let K denote the sample size.
+
+### Estimators
+
+$$\hat{N}_{\text{MLE}} = \max(X_1, \dots, X_K)$$
+
+$$\hat{N}_{\text{MVUE}} = \max(X_1, \dots, X_K) \cdot \left(1 + \frac{1}{K}\right) - 1$$
+
+$$\hat{N}_{\text{MOM}} = 2 \cdot \bar{X} - 1$$
+
+-Compare the performance of the estimators using:
+- Mean Absolute Error (MAE)
+- Variance
+- Bias
+- Mean Squared Error (MSE)
+
+## Project Structure
+```
+project/
+│
+├── src/
+│   ├── main.py
+│   ├── estimators.py
+│   ├── simulation.py
+│   ├── statistic.py
+│   └── visualization.py
+│
+├── reports/
+│   └── figures/
+│
+├── README.md
+└── requirements.txt
+```
 
 ## How to Run
 1. Clone the repository
 2. Install requirements: `pip install -r requirements.txt`
-3. Run the Jupyter notebook: `jupyter notebook notebooks/german_tank_analysis.ipynb`
-   Or run the Python script: `python src/german_tank_analysis.py`
+3. Run the Python script: `python src/main.py`
+**Note: The generated figures will be saved in reports/figures.**
 
 ## Results
 
 ### MAE Comparison Across Sample Sizes
 ![MAE Comparison](./reports/figures/mae_comparison.png)
 
-### Distribution of Differences (K=20)
-![Differences Distribution](./reports/figures/differences_distribution.png)
+### Variance Comparison Across Sample Sizes
+![Variance Comparison](./reports/figures/var_comparison.png)
 
-### Boxplot and Error Comparison
-![Box and Errors Graph](./reports/figures/box_errors.png)
+### Bias Comparison Across Sample Sizes
+![Bias Comparison](./reports/figures/bias_comparison.png)
 
-## Repository Structure
-.
-├── data/
-│ └── mae_results.csv
-├── notebooks/
-│ └── german_tank_analysis.ipynb
-├── reports/
-│ └── figures/
-│ ├── mae_comparison.png
-│ ├── differences_distribution.png
-│ └── box_errors.png
-├── src/
-│ └── german_tank_analysis.py
-├── README.md
-└── requirements.txt
+### MSE Comparison Across Sample Sizes
+![MSE Comparison](./reports/figures/mse_comparison.png)
+
+## Key Findings
+- In the simulated experiments, MVUE exhibited lower bias than MLE and MOM.
+- Estimation accuracy improved as the sample size increased.
+- For larger sample sizes, estimator variance decreased substantially.
+- MSE and MAE results were consistent with the observed bias and variance behavior.
+
+## Future Improvements
+- Add confidence intervals
+- Add statistical hypothesis tests
+- Add pytest unit tests
+- Export results to CSV
+- Add boxplot visualizations
